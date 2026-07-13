@@ -20,8 +20,9 @@ declare -A TARGETS=(
     [x86_64]=x86_64-linux-android
 )
 
-# Strip symbols at link to keep the binary (and APK) smaller.
-export RUSTFLAGS="-C strip=symbols"
+# Strip symbols at link to keep the binary small; -C link-arg adds 16 KB
+# page-size alignment (Android 15 / Play requirement).
+export RUSTFLAGS="-C strip=symbols -C link-arg=-Wl,-z,max-page-size=16384"
 
 cd "$SRC"
 for abi in "${!TARGETS[@]}"; do

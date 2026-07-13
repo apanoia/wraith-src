@@ -38,6 +38,7 @@ for abi in "${!TRIPLES[@]}"; do
         AR="$TOOLCHAIN/llvm-ar" \
         RANLIB="$TOOLCHAIN/llvm-ranlib" \
         STRIP="$TOOLCHAIN/llvm-strip" \
+        LDFLAGS="-Wl,-z,max-page-size=16384" \
         "$SRC/configure" \
             --host="$triple" \
             --disable-zlib \

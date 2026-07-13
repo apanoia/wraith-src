@@ -66,6 +66,8 @@ for abi in "${!TRIPLES[@]}"; do
         # warnings from bionic-thin applets to keep the build going.
         sed -i 's|^# CONFIG_PIE is not set|CONFIG_PIE=y|' .config
         sed -i 's|^CONFIG_EXTRA_CFLAGS=.*|CONFIG_EXTRA_CFLAGS="-Wno-implicit-function-declaration -Wno-int-conversion"|' .config
+        # 16 KB page-size alignment (Android 15 / Play requirement).
+        sed -i 's|^CONFIG_EXTRA_LDFLAGS=.*|CONFIG_EXTRA_LDFLAGS="-Wl,-z,max-page-size=16384"|' .config
         make oldconfig </dev/null >/dev/null 2>&1 || true
 
         make -j"$JOBS" \

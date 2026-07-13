@@ -71,6 +71,7 @@ for abi in "${!TRIPLES[@]}"; do
         CFLAGS="-Os -fPIC \
 -Wno-implicit-function-declaration -Wno-implicit-int \
 -DDEFAULT_PATH_VALUE='\"/system/bin:/system/xbin:/vendor/bin\"'" \
+        LDFLAGS="-Wl,-z,max-page-size=16384" \
         ./configure \
             --host="$triple" \
             --cache-file=config.cache \
